@@ -22,11 +22,7 @@ class PostsTypeORMRepository implements PostsRepository {
     return posts[0];
   }
 
-  async index(
-    name: string,
-    limit: number,
-    offset: number
-  ): Promise<PostDTO | undefined> {
+  async index(name: string, limit: number, offset: number): Promise<PostDTO[]> {
     const posts = await this.database.query(
       `SELECT * FROM post WHERE name=? LIMIT ? OFFSET ?;`,
       [name, limit, offset]
