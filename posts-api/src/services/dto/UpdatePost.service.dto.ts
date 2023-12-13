@@ -6,12 +6,12 @@ export type UpdatePostConstructor = {
 
 export type UpdatePostDTO = {
   id: number;
-  content: string;
-  author: string;
+  content?: string;
+  author?: string;
 };
 
 export type ExecuteResponse = {
-  result: PostDTO;
+  result: PostDTO | null;
 };
 
 export interface UpdatePostsService {

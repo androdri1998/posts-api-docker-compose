@@ -1,11 +1,11 @@
-import { EntityManager } from "typeorm";
+import { EntityManager } from 'typeorm';
 import {
   PostDTO,
   PostStatus,
   PostsRepository,
-} from "../../../repositories/PostsRepository";
-import { formatDatetime } from "../../../helpers/dateHelper";
-import { PostData } from "../../../services/dto/CreatePost.service.dto";
+} from '../../../repositories/PostsRepository';
+import { formatDatetime } from '../../../helpers/dateHelper';
+import { PostData } from '../../../services/dto/CreatePost.service.dto';
 
 class PostsTypeORMRepository implements PostsRepository {
   database: EntityManager;
@@ -15,17 +15,18 @@ class PostsTypeORMRepository implements PostsRepository {
   }
 
   async getById(id: number): Promise<PostDTO | undefined> {
-    const posts = await this.database.query(`SELECT * FROM post WHERE id=?;`, [
-      id,
-    ]);
+    const posts = await this.database.query(
+      `SELECT * FROM post WHERE id=? AND status != ?;`,
+      [id, PostStatus.DELETED]
+    );
 
     return posts[0];
   }
 
-  async index(name: string, limit: number, offset: number): Promise<PostDTO[]> {
+  async index(limit: number, offset: number): Promise<PostDTO[]> {
     const posts = await this.database.query(
-      `SELECT * FROM post WHERE name=? LIMIT ? OFFSET ?;`,
-      [name, limit, offset]
+      `SELECT * FROM post WHERE status != ? LIMIT ? OFFSET ?;`,
+      [PostStatus.DELETED, limit, offset]
     );
 
     return posts;

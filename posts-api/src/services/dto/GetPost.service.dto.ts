@@ -9,7 +9,7 @@ export type GetPostDTO = {
 };
 
 export type ExecuteResponse = {
-  result: PostDTO;
+  result: PostDTO | null;
 };
 
 export interface GetPostService {

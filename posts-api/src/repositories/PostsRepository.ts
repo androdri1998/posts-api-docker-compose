@@ -1,8 +1,8 @@
-import { PostData } from "../services/dto/CreatePost.service.dto";
+import { PostData } from '../services/dto/CreatePost.service.dto';
 
 export enum PostStatus {
-  ACTIVE = "Active",
-  DELETED = "Deleted",
+  ACTIVE = 'Active',
+  DELETED = 'Deleted',
 }
 
 export interface PostDTO {
@@ -16,7 +16,7 @@ export interface PostDTO {
 
 export interface PostsRepository {
   getById: (id: number) => Promise<PostDTO | undefined>;
-  index: (name: string, limit: number, offset: number) => Promise<PostDTO[]>;
+  index: (limit: number, offset: number) => Promise<PostDTO[]>;
   updateById: (data: PostDTO) => Promise<PostDTO>;
   deleteById: (id: number) => Promise<boolean>;
   create: (data: PostData) => Promise<PostDTO>;
