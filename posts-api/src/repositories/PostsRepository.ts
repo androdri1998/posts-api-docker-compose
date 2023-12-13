@@ -1,4 +1,4 @@
-import { PostData } from "../services/dto/CreatePostService.dto";
+import { PostData } from "../services/dto/CreatePost.service.dto";
 
 export enum PostStatus {
   ACTIVE = "Active",

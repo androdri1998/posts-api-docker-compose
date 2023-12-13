@@ -5,7 +5,7 @@ import {
   PostsRepository,
 } from "../../../repositories/PostsRepository";
 import { formatDatetime } from "../../../helpers/dateHelper";
-import { PostData } from "../../../services/dto/CreatePostService.dto";
+import { PostData } from "../../../services/dto/CreatePost.service.dto";
 
 class PostsTypeORMRepository implements PostsRepository {
   database: EntityManager;
