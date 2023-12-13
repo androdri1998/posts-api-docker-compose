@@ -15,6 +15,7 @@ import DeletePostService from './services/DeletePost.service';
 import GetPostService from './services/GetPost.service';
 import GetPostsService from './services/GetPosts.service';
 import UpdatePostService from './services/UpdatePost.service';
+import CheckPostMiddleware from './middlewares/CheckPost.middleware.dto';
 
 const fastify = Fastify({
   logger: true,
@@ -26,6 +27,7 @@ const deletePostService = new DeletePostService({ postsRepository });
 const getPostService = new GetPostService({ postsRepository });
 const getPostsService = new GetPostsService({ postsRepository });
 const updatePostService = new UpdatePostService({ postsRepository });
+const checkPostMiddleware = new CheckPostMiddleware({ postsRepository });
 
 const postsController = new PostsController({
   postsRepository,
@@ -38,15 +40,19 @@ const postsController = new PostsController({
 
 fastify.get('/posts', { schema: getPostsSchema }, postsController.index);
 fastify.post('/posts', { schema: createPostSchema }, postsController.create);
-fastify.get('/posts/:id', { schema: getPostSchema }, postsController.get);
+fastify.get(
+  '/posts/:id',
+  { schema: getPostSchema, preHandler: [checkPostMiddleware.execute] },
+  postsController.get
+);
 fastify.delete(
   '/posts/:id',
-  { schema: deletePostSchema },
+  { schema: deletePostSchema, preHandler: [checkPostMiddleware.execute] },
   postsController.destroy
 );
 fastify.patch(
   '/posts/:id',
-  { schema: updatePostSchema },
+  { schema: updatePostSchema, preHandler: [checkPostMiddleware.execute] },
   postsController.patch
 );
 
