@@ -15,7 +15,8 @@ import DeletePostService from './services/DeletePost.service';
 import GetPostService from './services/GetPost.service';
 import GetPostsService from './services/GetPosts.service';
 import UpdatePostService from './services/UpdatePost.service';
-import CheckPostMiddleware from './middlewares/CheckPost.middleware.dto';
+import CheckPostMiddleware from './middlewares/CheckPost.middleware';
+import CheckPostService from './services/CheckPost.service';
 
 const fastify = Fastify({
   logger: true,
@@ -27,7 +28,12 @@ const deletePostService = new DeletePostService({ postsRepository });
 const getPostService = new GetPostService({ postsRepository });
 const getPostsService = new GetPostsService({ postsRepository });
 const updatePostService = new UpdatePostService({ postsRepository });
-const checkPostMiddleware = new CheckPostMiddleware({ postsRepository });
+const checkPostService = new CheckPostService({ postsRepository });
+
+const checkPostMiddleware = new CheckPostMiddleware({
+  postsRepository,
+  checkPostService,
+});
 
 const postsController = new PostsController({
   postsRepository,
