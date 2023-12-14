@@ -12,7 +12,7 @@ describe('CheckPostService suit test', () => {
 
   it(`should return true
       when post exists and execute method is called
-      given a id parameter`, async () => {
+      given an id parameter`, async () => {
     const date = new Date();
     const mockPostData = {
       id: 1,
